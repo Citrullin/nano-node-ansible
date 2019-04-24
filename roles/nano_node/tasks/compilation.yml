@@ -1,0 +1,71 @@
+- name: Stop nanocurrency service
+  shell: systemctl stop nanocurrency
+  ignore_errors: true
+
+- name: Remove nano directory
+  file:
+    state: absent
+    path: "/usr/share/nano/"
+
+- name: Remove nanocurrency.service
+  file:
+    state: absent
+    path: "/etc/systemd/system/nanocurrency.service"
+
+- name: Remove nanocurrency/Nano
+  file:
+    state: absent
+    path: "/var/nanocurrency/Nano"
+
+- name: Remove nano_node
+  file:
+    state: absent
+    path: "/usr/bin/nano_node"
+
+- name: Create nano directory
+  file:
+    path: /usr/share/nano
+    state: directory
+    owner: nanocurrency
+    group: nanocurrency
+    mode: 0770
+
+- name: "Extract nano"
+  unarchive:
+    src: "{{ playbook_dir }}/tmp/nano-18.0.tar.gz"
+    dest: /usr/share/nano
+
+- name: "Compile nano"
+  shell: |
+    cd /usr/share/nano/nano-18.0 && \
+    cmake -DBOOST_INCLUDE_DIR=/opt/boost/include \
+    -DBOOST_LIBRARYDIR=/opt/boost/lib \
+    -DBOOST_ROOT=/opt/boost . && \
+    make install
+
+- name: Create nano config directory
+  file:
+    path: /usr/share/nano/config
+    state: directory
+    owner: nanocurrency
+    group: nanocurrency
+    mode: 0770
+
+- name: "Copy nano_node"
+  shell: cp /usr/share/nano/nano-18.0/nano_node /usr/bin/nano_node
+
+- name: "Copy nano config"
+  template:
+    src: "{{ nano_network }}.json.j2"
+    dest: /usr/share/nano/config/config.json
+
+- name: "Copy nanocurrency service"
+  shell: cp /usr/share/nano/nano-18.0/etc/systemd/nanocurrency.service /etc/systemd/system/nanocurrency.service
+
+- name: "Create working directory"
+  file:
+    path: /var/nanocurrency/Nano
+    state: directory
+    owner: nanocurrency
+    group: nanocurrency
+    mode: 0770

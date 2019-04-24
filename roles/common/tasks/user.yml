@@ -1,0 +1,9 @@
+- name: Add group nano
+  group:
+    name: nanocurrency
+    state: present
+
+- name: Add user nano
+  user:
+    name: nanocurrency
+    group: nanocurrency

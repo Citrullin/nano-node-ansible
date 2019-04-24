@@ -1,0 +1,20 @@
+---
+- hosts: localhost
+  gather_facts: true
+  vars:
+    ansible_connection: local
+  roles:
+    - local
+
+- hosts: nano_node
+  gather_facts: false
+  pre_tasks:
+    - name: 'install python2'
+      raw: apt-get -y install python
+
+- hosts: nano_node
+  gather_facts: true
+  roles:
+    - common
+    - boost
+    - nano_node

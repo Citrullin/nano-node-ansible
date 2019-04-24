@@ -1,0 +1,11 @@
+- name: "Download boost"
+  get_url:
+    url: "{{ boost_download_url }}"
+    dest: "{{ playbook_dir }}/tmp/"
+    mode: 0770
+
+- name: "Download nano node"
+  get_url:
+    url: "{{ nano_download }}"
+    dest: "{{ playbook_dir }}/tmp/"
+    mode: 0770

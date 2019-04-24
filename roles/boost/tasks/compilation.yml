@@ -1,0 +1,22 @@
+- name: Remove nanocurrency.service
+  file:
+    state: absent
+    path: "/usr/share/boost"
+
+- name: "Create boost directory"
+  file:
+    path: /usr/share/boost
+    state: directory
+    owner: nanocurrency
+    group: nanocurrency
+    mode: 0770
+
+- name: "Extract boost"
+  unarchive:
+    src: "{{ playbook_dir }}/tmp/boost_1_69_0.tar.gz"
+    dest: /usr/share/boost
+
+- name: "Compile boost"
+  shell: cd /usr/share/boost/boost_1_69_0 && ./bootstrap.sh --prefix=/opt/boost && ./b2 install --prefix=/opt/boost --with=all
+
+

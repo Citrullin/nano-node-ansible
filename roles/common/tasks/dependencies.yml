@@ -1,0 +1,24 @@
+- name: install gcc
+  package:
+    name: build-essential
+    state: present
+
+- name: install cmake
+  package:
+    name: cmake
+    state: present
+
+- name: install python-dev
+  package:
+    name: python-dev
+    state: present
+
+- name: install libxml2-dev
+  package:
+    name: libxml2-dev
+    state: present
+
+- name: install libxslt-dev
+  package:
+    name: libxslt-dev
+    state: present

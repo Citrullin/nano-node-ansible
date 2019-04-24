@@ -1,0 +1,4 @@
+nano_version: 18.0
+nano_download: "https://github.com/nanocurrency/nano-node/releases/download/V18.0/nano-18.0.tar.gz"
+nano_database: "https://mynano.ninja/api/ledger/download"
+nano_network: live
