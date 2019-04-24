@@ -1,4 +1,4 @@
-# Nano ansible scripts [WIP]
+# Nano (cryptocurrency) ansible scripts [WIP]
 
 **Some ansible script to enable deployment of a nano node on IPv6 only node. For example Scaleway.**
 
